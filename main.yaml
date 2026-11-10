@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Infrastructure as Code (IaC) template for deploying a video streaming application on AWS using CloudFormation."
+
+Resources: 
+  
+  EC2ProfileInstanceStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: iam/ec2-role.yaml
+
+  LiveVideoStreamingCompute:
+    Type: AWS::EC2::Instance
+    Properties: 
+      DisableApiTermination: true # Optional, enable if accidental termination protection is required
+      IamInstanceProfile: !GetAtt EC2ProfileInstanceStack.Outputs.LiveVideoStreamingInstanceProfileName
